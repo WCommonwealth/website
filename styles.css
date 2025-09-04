@@ -191,4 +191,145 @@ a:hover {
 }
 
 .secondary {
-  background: linear
+  background: linear-gradient(45deg, #800080, #4b004b);
+  color: #fff;
+}
+
+.secondary:hover {
+  background: linear-gradient(45deg, #4b004b, #800080);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #800080;
+}
+
+.tertiary {
+  background: #333;
+  color: #ffd700;
+}
+
+.tertiary:hover {
+  background: #444;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ffd700;
+}
+
+/* Wallet Table */
+#wallet table {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  margin-top: 30px;
+  background: rgba(26, 0, 26, 0.8);
+  animation: tableFadeIn 1s ease-out;
+}
+
+@keyframes tableFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#wallet th, #wallet td {
+  padding: 15px;
+  border: 2px solid #ffd700;
+  text-align: center;
+}
+
+#wallet th {
+  background: #800080;
+  color: #ffd700;
+  text-shadow: 0 0 10px #ffd700;
+}
+
+#wallet td {
+  color: #ddd;
+  transition: background 0.3s ease;
+}
+
+#wallet tr:hover td {
+  background: rgba(255, 215, 0, 0.1);
+}
+
+/* Contact Form */
+#contact form {
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#contact input, #contact textarea {
+  padding: 15px;
+  background: rgba(26, 0, 26, 0.8);
+  border: 2px solid #ffd700;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+#contact input:focus, #contact textarea:focus {
+  border-color: #800080;
+  outline: none;
+  box-shadow: 0 0 15px #800080;
+}
+
+#contact textarea {
+  height: 200px;
+  resize: vertical;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav {
+    padding: 15px 20px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(26, 0, 26, 0.9);
+    flex-direction: column;
+    padding: 20px;
+    animation: menuSlideIn 0.5s ease-out;
+  }
+
+  @keyframes menuSlideIn {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  section {
+    padding: 80px 20px;
+  }
+
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+
+  .cta-button {
+    padding: 12px 25px;
+    font-size: 16px;
+  }
+
+  #wallet table {
+    font-size: 14px;
+  }
+}
