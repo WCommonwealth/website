@@ -1,19 +1,3 @@
-// Password Protection
-const hashedPassword = "$2a$10$7W1z6Xz8z6Xz8z6Xz8z6Xu7W1z6Xz8z6Xz8z6Xz8z6Xz8z6Xz8z6"; // Hashed version of $Walar$
-document.getElementById("password-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const input = document.getElementById("password-input").value;
-  bcrypt.compare(input, hashedPassword, (err, result) => {
-    if (result) {
-      document.getElementById("password-overlay").style.display = "none";
-      document.getElementById("main-content").style.display = "block";
-      initAnimations(); // Start animations after login
-    } else {
-      document.getElementById("error-message").style.display = "block";
-    }
-  });
-});
-
 // Wallet Net Worth
 const holdings = {
   bitcoin: 0.5,
@@ -51,16 +35,16 @@ function initAnimations() {
   gsap.from("#home p", { duration: 1, y: 50, opacity: 0, delay: 0.2, ease: "power2.out" });
   gsap.from(".cta-button", { duration: 1, scale: 0.8, opacity: 0, delay: 0.4, ease: "back.out(1.7)" });
 
-  // Particles.js
+  // Particles.js (Smoky Triangles with Illuminati Vibe)
   particlesJS("particles-js", {
     particles: {
-      number: { value: 50, density: { enable: true, value_area: 800 } },
-      color: { value: "#ffd700" },
-      shape: { type: "circle" },
-      opacity: { value: 0.5, random: true },
-      size: { value: 3, random: true },
-      line_linked: { enable: true, distance: 150, color: "#ffd700", opacity: 0.4, width: 1 },
-      move: { enable: true, speed: 2, direction: "none", random: false }
+      number: { value: 30, density: { enable: true, value_area: 800 } },
+      color: { value: ["#ffd700", "#b22222", "#00b7eb"] },
+      shape: { type: "triangle", polygon: { nb_sides: 3 } },
+      opacity: { value: 0.4, random: true },
+      size: { value: 5, random: true },
+      line_linked: { enable: true, distance: 200, color: "#ffd700", opacity: 0.3, width: 1 },
+      move: { enable: true, speed: 3, direction: "none", random: true }
     },
     interactivity: {
       detect_on: "canvas",
@@ -83,6 +67,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Initialize Wallet
+// Initialize
+initAnimations();
 updateWallet();
 setInterval(updateWallet, 60000); // Update every minute
