@@ -1,0 +1,59 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W Commonwealth</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Password Overlay -->
+  <div id="password-overlay">
+    <form id="password-form">
+      <h2>Enter Password</h2>
+      <input type="password" id="password-input" placeholder="Password">
+      <button type="submit">Submit</button>
+      <p id="error-message" style="display: none;">Incorrect Password</p>
+    </form>
+  </div>
+
+  <!-- Main Content (Hidden Initially) -->
+  <div id="main-content" style="display: none;">
+    <header>
+      <nav>
+        <div class="logo">W Commonwealth</div>
+        <div class="hamburger">☰</div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#walar">Walar Language</a></li>
+          <li><a href="#w-encrypt">W-Encrypt</a></li>
+          <li><a href="#wallet">Wallet</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="home">
+      <h1>W Commonwealth: Speak Through Code</h1>
+      <p>Inspiring wealth, privacy, and power.</p>
+    </section>
+
+    <section id="wallet">
+      <h2>Wallet Net Worth</h2>
+      <p>Total: $<span id="net-worth">Loading...</span></p>
+      <table>
+        <tr><th>Coin</th><th>Amount</th><th>Value (USD)</th></tr>
+        <!-- Populated by JavaScript -->
+      </table>
+    </section>
+
+    <!-- Other sections (About, Walar, W-Encrypt, Contact) -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
