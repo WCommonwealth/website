@@ -1,0 +1,345 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W Commonwealth Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAHklEQVQoU2NkYGBg6O/v7+9vYGhoaOj48+fPfwYGBgB7/QGL9Zq8fwAAAABJRU5ErkJggg==') repeat, linear-gradient(135deg, #000000 0%, #1a0033 100%);
+      font-family: 'Impact', 'Arial Narrow', Arial, sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .login-container {
+      background: rgba(0, 0, 0, 0.97);
+      padding: 70px;
+      border-radius: 25px;
+      box-shadow: 0 0 50px rgba(255, 105, 180, 0.9), 0 0 80px rgba(128, 0, 128, 0.7), 0 0 100px rgba(255, 215, 0, 0.3);
+      text-align: center;
+      width: 500px;
+      border: 5px solid #ff69b4;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 105, 180, 0.3), rgba(128, 0, 128, 0.2), transparent);
+      animation: rotate 12s linear infinite;
+      pointer-events: none;
+    }
+
+    .login-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.4), transparent);
+      animation: scanline 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+
+    .login-container h1 {
+      color: #ff69b4;
+      font-size: 4em;
+      margin: 0 0 50px;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-shadow: 5px 5px 8px rgba(128, 0, 128, 1), 0 0 40px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 215, 0, 0.5);
+      animation: flicker 1.2s infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.5; }
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 18px;
+      margin: 25px 0;
+      background: rgba(17, 17, 17, 0.9);
+      border: 3px solid #ff69b4;
+      color: #fff;
+      font-size: 1.3em;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .login-container input:focus {
+      border-color: #800080;
+      box-shadow: 0 0 20px rgba(128, 0, 128, 1), 0 0 30px rgba(255, 105, 180, 0.7);
+    }
+
+    .login-container input::placeholder {
+      color: #b19cd9;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.7;
+    }
+
+    .login-container button {
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+      background: linear-gradient(45deg, #ff69b4, #800080, #ffd700);
+      border: none;
+      color: #fff;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-container button:hover {
+      background: linear-gradient(45deg, #800080, #ff69b4, #e6c200);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.9);
+    }
+
+    .login-container button:active {
+      transform: scale(0.95);
+    }
+
+    .error-message {
+      color: #ff0000;
+      font-size: 1.1em;
+      margin-top: 20px;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
+      display: none;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .glitch {
+      animation: glitch 0.5s linear infinite;
+    }
+
+    @keyframes glitch {
+      2%, 64% { transform: translate(5px, 0) skew(4deg); }
+      4%, 60% { transform: translate(-5px, 0) skew(-4deg); }
+      62% { transform: translate(0, 0) skew(7deg); }
+    }
+
+    .neon-border {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid #ff69b4;
+      border-radius: 25px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(128, 0, 128, 0.6);
+      z-index: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(128, 0, 128, 0.6); }
+      50% { box-shadow: 0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(128, 0, 128, 0.8); }
+      100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(128, 0, 128, 0.6); }
+    }
+  </style>
+</head>
+<body>
+  <div id="login" class="login-container">
+    <div class="neon-border"></div>
+    <h1 class="glitch">W Commonwealth Access</h1>
+    <input type="text" id="username" placeholder="USERNAME" required>
+    <input type="password" id="password" placeholder="PASSWORD" required>
+    <button onclick="login()">Login</button>
+    <div id="error" class="error-message">Invalid credentials.</div>
+  </div>
+
+  <script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+      if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+          var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+          var firstSheetName = workbook.SheetNames[0];
+          var worksheet = workbook.Sheets[firstSheetName];
+          var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+          var filteredData = jsonData.filter(row => row.some(filledCell));
+          var headerRowIndex = filteredData.findIndex((row, index) =>
+            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+          );
+          if (headerRowIndex === -1 || headerRowIndex > 25) {
+            headerRowIndex = 0;
+          }
+          var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+          csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+          return csv;
+        } catch (e) {
+          console.error(e);
+          return "";
+        }
+      }
+      return gk_fileData[filename] || "";
+    }
+
+    // Function to hash a string using SHA-256
+    async function hashPassword(password) {
+      try {
+        const msgBuffer = new TextEncoder().encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        console.log('Hashed password:', hashHex); // Debug: Log the hashed password
+        return hashHex;
+      } catch (e) {
+        console.error('Hashing error:', e);
+        throw new Error('Failed to hash password');
+      }
+    }
+
+    async function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const error = document.getElementById('error');
+
+      try {
+        // Hash the entered password
+        const hashedPassword = await hashPassword(password);
+
+        // Fetch the users.txt file
+        const response = await fetch('users.txt');
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+        }
+        const text = await response.text();
+        console.log('users.txt content:', text); // Debug: Log the raw content
+
+        // Parse users.txt into an object
+        const users = text.split('\n').reduce((acc, line) => {
+          const trimmedLine = line.trim();
+          if (trimmedLine) { // Skip empty lines
+            const [user, hash] = trimmedLine.split(':');
+            if (user && hash) {
+              acc[user] = hash;
+            } else {
+              console.warn('Invalid line in users.txt:', trimmedLine); // Debug: Warn about malformed lines
+            }
+          }
+          return acc;
+        }, {});
+        console.log('Parsed users:', users); // Debug: Log the parsed users object
+
+        // Check if username exists and hashed password matches
+        if (users[username] && users[username] === hashedPassword) {
+          console.log('Login successful for user:', username); // Debug: Log success
+          window.location.href = 'main.html';
+          error.style.display = 'none';
+        } else {
+          console.log('Login failed: Invalid username or password'); // Debug: Log failure
+          error.textContent = 'Invalid credentials.';
+          error.style.display = 'block';
+        }
+      } catch (e) {
+        console.error('Login error:', e.message); // Debug: Log specific error
+        error.textContent = `Error during login: ${e.message}. Please try again.`;
+        error.style.display = 'block';
+      }
+    }
+
+    // Enter key support for login
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        login();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="W Commonwealth: Mastering Crypto, Tech, and Privacy with the Walar Language and W-Encrypt. Join our elite circle of wealth and power.">
+  <title>W Commonwealth - The Power Within</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Background Particles -->
+  <div id="particles-js"></div>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <div class="logo">W Commonwealth</div>
+      <div class="hamburger" aria-label="Toggle Menu">☰</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#walar">Walar Language</a></li>
+        <li><a href="#w-encrypt">W-Encrypt</a></li>
+        <li><a href="#wallet">Wallet Empire</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><button class="cta-button tertiary" onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home">
+    <div class="home-content">
+      <h1>W Commonwealth</h1>
+      <p class="slogan">Speak Through Code | Unleash the Power of Privacy and Wealth</p>
+      <div class="button-group">
+        <button class="cta-button primary">Enter Our World</button>
+        <button class="cta-button secondary">Learn Our Secrets</button>
+      </div>
+      <p class="subtext">Welcome to the elite society where technology, cryptography, and financial dominance converge. Founded by visionaries Vlad and Victor, we redefine the boundaries of power and secrecy.</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About W Commonwealth</h2>
+    <p>The W Commonwealth, founded on September 4, 2021, by Vlad and Victor, is a private organization born from a bold vision. At just 11 years old, these pioneers created the Walar language—a unique system of characters designed for unbreakable privacy during their school days. Our mission? To master crypto, technology, and privacy, building a financial empire that ensures freedom and wealth.</p>
+    <p>With a 50/50 crypto wallet secured by a 3-of-4 device signature system, we stack Bitcoin, Ethereum, Solana, Dogecoin, Litecoin, and more, aiming for big wealth. Our tools, like W-Encrypt, empower secure communication, making us a fortress of innovation.</p>
+    <button class="cta-button tertiary">Discover Our History</button>
+  </section>
+
+  <!-- Walar Language Section -->
+  <section id="walar">
+    <h2>Walar Language: The Code of Silence</h2>
+    <p>In 2021, Vlad and Victor, at the tender age of 11, invented Walar—a revolutionary language with unique characters that allow private communication undetectable by outsiders. Developed during school hours, this cryptic system became the foundation of our privacy ethos. Each character is a symbol of secrecy, crafted to protect our thoughts from prying eyes.</p>
+    <p>Today, Walar is more than a language; it’s a cultural artifact of our organization, used to encode messages that only the initiated can decipher. Explore its beauty and power with our resources below.</p>
+    <div class="button-group">
+      <button class="cta-button primary">Learn Walar</button>
+      <button class="cta-button secondary">View Characters</button>
+    </div>
+  </section>
+
+  <!-- W-Encrypt Section -->
+  <section id="w-encrypt">
+    <h2>W-Encrypt: The Ultimate Shield</h2>
+    <p>W-Encrypt is our proprietary encryption tool, born from the Walar language. Type a message, and it transforms into a series of incomprehensible characters, unreadable to all but those with the decryption key. This tool embodies our slogan, “Speak through code,” offering unparalleled privacy in a digital world.</p>
+    <p>Whether you’re securing sensitive data or communicating with our elite circle, W-Encrypt ensures your words remain yours alone. Its bulletproof design mirrors our wallet’s security, requiring precise decryption to reveal the original message.</p>
+    <button class="cta-button tertiary">Decrypt Now</button>
+  </section>
+
+  <!-- Wallet Section -->
+  <section id="wallet">
+    <h2>Wallet Empire: Building Wealth</h2>
+    <p>Our financial stronghold began on September 4, 2021, with a 50/50 crypto wallet managed by Vlad and Victor. Secured by a 3-of-4 device signature system, it’s impervious to hacking. We hold long-term coins like Bitcoin, Ethereum, Solana, Dogecoin, and Litecoin, multiplying our wealth with every market move.</p>
+    <p>Below is the real-time net worth of our empire, updated every minute. Watch as our investments grow, a testament to our strategic brilliance.</p>
+    <p>Total Net Worth: $<span id="net-worth">Loading...</span></p>
+    <table>
+      <thead>
+        <tr><th>Coin</th><th>Amount</th><th>Value (USD)</th></tr>
+      </thead>
+      <tbody id="wallet-table"></tbody>
+    </table>
+    <button class="cta-button secondary">Track Our Growth</button>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact the Inner Circle</h2>
+    <p>Ready to join the W Commonwealth or seek our expertise? Reach out to our elite team. We operate in the shadows, but your message will find its way to the top. Provide your details below, and we’ll respond with the discretion you deserve.</p>
+    <form>
+      <input type="text" placeholder="Your Name" aria-label="Your Name" required>
+      <input type="email" placeholder="Your Email" aria-label="Your Email" required>
+      <textarea placeholder="Your Message" aria-label="Your Message" required></textarea>
+      <button type="submit" class="cta-button primary">Send to the Elite</button>
+    </form>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    function logout() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
