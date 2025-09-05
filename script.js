@@ -29,9 +29,15 @@ async function updateWallet() {
       });
       tableBody.appendChild(row);
     }
-    gsap.from("#net-worth", { text: "0", duration: 1, snap: { text: 1 }, onUpdate: () => {
-      document.getElementById("net-worth").textContent = total.toFixed(2);
-    }});
+    let worth = { value: 0 };
+    gsap.to(worth, {
+      value: total,
+      duration: 1,
+      snap: "value",
+      onUpdate: () => {
+        document.getElementById("net-worth").textContent = worth.value.toFixed(2);
+      }
+    });
   } catch (error) {
     console.error("Error fetching wallet data:", error);
     document.getElementById("net-worth").textContent = "Error";
@@ -40,6 +46,8 @@ async function updateWallet() {
 
 // Animations
 function initAnimations() {
+  gsap.registerPlugin(ScrollTrigger);
+
   // GSAP Animations
   gsap.from(".home-content h1", { duration: 1.5, y: 100, opacity: 0, ease: "elastic.out(1, 0.5)" });
   gsap.from(".home-content .slogan", { duration: 1.5, y: 100, opacity: 0, delay: 0.5, ease: "power2.out" });
@@ -84,8 +92,17 @@ function initAnimations() {
 // Hamburger Menu
 document.querySelector(".hamburger").addEventListener("click", () => {
   const navLinks = document.querySelector(".nav-links");
-  navLinks.classList.toggle("show");
-  gsap.fromTo(navLinks, { x: "-100%" }, { x: "0%", duration: 0.5, ease: "power2.out" });
+  if (navLinks.classList.contains("show")) {
+    gsap.to(navLinks, { 
+      x: "-100%", 
+      duration: 0.5, 
+      ease: "power2.in", 
+      onComplete: () => navLinks.classList.remove("show") 
+    });
+  } else {
+    navLinks.classList.add("show");
+    gsap.fromTo(navLinks, { x: "-100%" }, { x: "0%", duration: 0.5, ease: "power2.out" });
+  }
 });
 
 // Smooth Scrolling and Button Interactions
