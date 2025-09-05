@@ -1,3 +1,4 @@
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -101,12 +102,7 @@ section {
   background: rgba(26, 0, 26, 0.5);
   border-top: 1px solid #ffd700;
   border-bottom: 1px solid #800080;
-  animation: sectionFadeIn 1.5s ease-out;
-}
-
-@keyframes sectionFadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  /* Removed animation to avoid GSAP conflict */
 }
 
 h1, h2 {
@@ -218,12 +214,7 @@ a:hover {
   border-collapse: collapse;
   margin-top: 30px;
   background: rgba(26, 0, 26, 0.8);
-  animation: tableFadeIn 1s ease-out;
-}
-
-@keyframes tableFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  /* Removed animation to avoid GSAP conflict */
 }
 
 #wallet th, #wallet td {
