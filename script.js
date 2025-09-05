@@ -46,20 +46,23 @@ async function updateWallet() {
 
 // Animations
 function initAnimations() {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-  // GSAP Animations
+  // Home section and content animations (immediate, no ScrollTrigger)
+  gsap.from("#home", { y: 50, opacity: 0, duration: 1, ease: "power2.out" });
   gsap.from(".home-content h1", { duration: 1.5, y: 100, opacity: 0, ease: "elastic.out(1, 0.5)" });
   gsap.from(".home-content .slogan", { duration: 1.5, y: 100, opacity: 0, delay: 0.5, ease: "power2.out" });
   gsap.from(".button-group", { duration: 1.5, y: 100, opacity: 0, delay: 1, ease: "back.out(1.7)" });
   gsap.from(".subtext", { duration: 1.5, y: 100, opacity: 0, delay: 1.5, ease: "power2.out" });
 
-  gsap.utils.toArray("section").forEach((section, index) => {
+  // Other sections (with ScrollTrigger, once: true to prevent reverse)
+  gsap.utils.toArray("section:not(#home)").forEach((section, index) => {
     gsap.from(section, {
       scrollTrigger: {
         trigger: section,
         start: "top 80%",
-        toggleActions: "play none none reverse"
+        toggleActions: "play none none none",
+        once: true // Changed: Animate once, no reverse
       },
       y: 50,
       opacity: 0,
@@ -87,6 +90,9 @@ function initAnimations() {
       modes: { repulse: { distance: 200 }, push: { particles_nb: 4 } }
     }
   });
+
+  // Force refresh ScrollTrigger positions after load
+  ScrollTrigger.refresh();
 }
 
 // Hamburger Menu
@@ -123,7 +129,9 @@ document.querySelectorAll(".cta-button").forEach(button => {
   });
 });
 
-// Initialize
-initAnimations();
-updateWallet();
-setInterval(updateWallet, 60000); // Update every minute
+// Initialize on DOMContentLoaded to ensure ready
+document.addEventListener("DOMContentLoaded", () => {
+  initAnimations();
+  updateWallet();
+  setInterval(updateWallet, 60000); // Update every minute
+});
