@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>W Commonwealth Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAHklEQVQoU2NkYGBg6O/v7+9vYGhoaOj48+fPfwYGBgB7/QGL9Zq8fwAAAABJRU5ErkJggg==') repeat, linear-gradient(135deg, #000000 0%, #1a0033 100%);
+      font-family: 'Impact', 'Arial Narrow', Arial, sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .login-container {
+      background: rgba(0, 0, 0, 0.97);
+      padding: 70px;
+      border-radius: 25px;
+      box-shadow: 0 0 50px rgba(255, 105, 180, 0.9), 0 0 80px rgba(128, 0, 128, 0.7), 0 0 100px rgba(255, 215, 0, 0.3);
+      text-align: center;
+      width: 500px;
+      max-width: 90vw;
+      border: 5px solid #ff69b4;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 105, 180, 0.3), rgba(128, 0, 128, 0.2), transparent);
+      animation: rotate 12s linear infinite;
+      pointer-events: none;
+    }
+
+    .login-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.4), transparent);
+      animation: scanline 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+
+    .login-container h1 {
+      color: #ff69b4;
+      font-size: 4em;
+      margin: 0 0 50px;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-shadow: 5px 5px 8px rgba(128, 0, 128, 1), 0 0 40px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 215, 0, 0.5);
+      animation: flicker 1.2s infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.5; }
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 18px;
+      margin: 25px 0;
+      background: rgba(17, 17, 17, 0.9);
+      border: 3px solid #ff69b4;
+      color: #fff;
+      font-size: 1.3em;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .login-container input:focus {
+      border-color: #800080;
+      box-shadow: 0 0 20px rgba(128, 0, 128, 1), 0 0 30px rgba(255, 105, 180, 0.7);
+    }
+
+    .login-container input::placeholder {
+      color: #b19cd9;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.7;
+    }
+
+    .login-container button {
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+      background: linear-gradient(45deg, #ff69b4, #800080, #ffd700);
+      border: none;
+      color: #fff;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-container button:hover {
+      background: linear-gradient(45deg, #800080, #ff69b4, #e6c200);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.9);
+    }
+
+    .login-container button:active {
+      transform: scale(0.95);
+    }
+
+    .error-message {
+      color: #ff0000;
+      font-size: 1.1em;
+      margin-top: 20px;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
+      display: none;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .glitch {
+      animation: glitch 0.5s linear infinite;
+    }
+
+    @keyframes glitch {
+      2%, 64% { transform: translate(5px, 0) skew(4deg); }
+      4%, 60% { transform: translate(-5px, 0) skew(-4deg); }
+      62% { transform: translate(0, 0) skew(7deg); }
+    }
+
+    .neon-border {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid #ff69b4;
+      border-radius: 25px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(128, 0, 128, 0.6);
+      z-index: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(128, 0, 128, 0.6); }
+      50% { box-shadow: 0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(128, 0, 128, 0.8); }
+      100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(128, 0, 128, 0.6); }
+    }
+  </style>
+</head>
+<body>
+  <div id="login" class="login-container">
+    <div class="neon-border"></div>
+    <h1 class="glitch">W Commonwealth Access</h1>
+    <input type="text" id="username" placeholder="USERNAME" required>
+    <input type="password" id="password" placeholder="PASSWORD" required>
+    <button onclick="login()">Login</button>
+    <div id="error" class="error-message">Invalid credentials.</div>
+  </div>
+
+  <script>
+    async function hashPassword(password) {
+      const msgBuffer = new TextEncoder().encode(password);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    async function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const error = document.getElementById('error');
+
+      if (!username || !password) {
+        error.textContent = 'Please enter both username and password.';
+        error.style.display = 'block';
+        return;
+      }
+
+      const hashedPassword = await hashPassword(password);
+
+      const response = await fetch('users.txt');
+      const text = await response.text();
+
+      const users = {};
+      text.split('\n').forEach(line => {
+        const [user, hash] = line.trim().split(':');
+        if (user && hash) {
+          users[user] = hash.trim();
+        }
+      });
+
+      if (users[username] && users[username] === hashedPassword) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', username); // Save username
+        window.location.href = 'main.html';
+      } else {
+        error.textContent = 'Invalid username or password.';
+        error.style.display = 'block';
+      }
+    }
+
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        login();
+      }
+    });
+  </script>
+</body>
+</html>
